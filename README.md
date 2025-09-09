@@ -1,4 +1,4 @@
-# fuck-u-code Python版本重新实现
+# 用ai复现100个项目之fuck-u-code Python版本重新实现（1/100）
 
 ## 项目简介
 
