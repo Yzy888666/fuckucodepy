@@ -123,17 +123,42 @@ class CodeAnalyzer(Analyzer):
     def analyze_file(self, file_path: str) -> AnalysisResult:
         """
         分析单个文件
-        
+
         Args:
             file_path: 文件路径
-            
+
         Returns:
             AnalysisResult: 分析结果
         """
         if not os.path.isfile(file_path):
             raise FileNotFoundError(file_path)
-        
-        return self.analyze(file_path)
+
+        # 创建分析结果
+        start_time = datetime.now()
+        result = AnalysisResult(file_path, start_time)
+
+        try:
+            # 检查文件是否支持
+            if not self._language_detector.is_supported_file(file_path):
+                result.add_error(f"不支持的文件类型: {file_path}")
+                return result
+
+            # 分析单个文件
+            config = AnalysisConfig(target_path=file_path)
+            file_result = self._analyze_single_file(file_path, config)
+            if file_result:
+                result.add_file_result(file_result)
+
+            # 计算总体评分和等级
+            self._calculate_overall_results(result)
+
+        except Exception as e:
+            result.add_error(f"分析文件失败: {e}")
+        finally:
+            result.end_time = datetime.now()
+            result.calculate_statistics()
+
+        return result
     
     def _find_source_files(self, path: str, config: AnalysisConfig) -> List[str]:
         """

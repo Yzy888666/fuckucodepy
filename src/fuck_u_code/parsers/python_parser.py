@@ -273,11 +273,12 @@ class PythonParser(BaseParser):
         Returns:
             str: 文档字符串
         """
-        if (hasattr(node, 'body') and 
-            node.body and 
+        if (hasattr(node, 'body') and
+            node.body and
             isinstance(node.body[0], ast.Expr) and
-            isinstance(node.body[0].value, ast.Str)):
-            return node.body[0].value.s
+            isinstance(node.body[0].value, ast.Constant) and
+            isinstance(node.body[0].value.value, str)):
+            return node.body[0].value.value
         
         # Python 3.8+
         if (hasattr(node, 'body') and 

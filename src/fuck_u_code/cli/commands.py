@@ -231,7 +231,7 @@ def _generate_report(
         str: 报告内容
     """
     if output_format == "markdown":
-        reporter = MarkdownReporter(max_files=max_files, max_issues_per_file=max_issues)
+        reporter = MarkdownReporter()
         return reporter.generate(result)
     
     elif output_format == "json":
@@ -239,8 +239,8 @@ def _generate_report(
         return json.dumps(result.to_dict(), ensure_ascii=False, indent=2)
     
     else:  # terminal
-        reporter = TerminalReporter(max_files=max_files, max_issues_per_file=max_issues)
-        return reporter.generate(result, verbose=verbose, summary=summary)
+        reporter = TerminalReporter()
+        return reporter.generate(result)
 
 
 def _save_report(content: str, output_path: str, output_format: str) -> None:
