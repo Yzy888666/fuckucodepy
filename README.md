@@ -157,6 +157,7 @@ MIT License - 详见 [LICENSE](MIT) 文件
 
 - 感谢原始Go版本的fuck-u-code项目提供灵感
 - 感谢所有贡献者的支持
+- 谢谢augment
 
 ---
 
